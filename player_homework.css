@@ -1,0 +1,189 @@
+
+
+
+:root{
+    --vol-thumb-appearance: none;
+    --vol-thumb-width: 15px;
+    --vol-thumb-height: 15px;
+    --vol-thumb-background-color: rgb(82, 41, 4);
+    --vol-thumb-border-radius: 5px;
+    --vol-thumb-border: 3px solid white;
+
+    --progress-appearance: none;
+    --progress-width: 12px;
+    --progress-height: 12px;
+    --progress-background-color: rgb(82, 41, 4);
+    --progress-border: 2px solid rgb(255, 255, 255);
+    --progress-border-radius: 50%;
+    --progress-transition: 0.1s;
+    --progress-hover-width: 15px;
+    --progress-hover-height: 15px;
+    --progress-hover-border: 3px solid rgb(255, 255, 255);
+    }
+
+    .setMute {
+    text-decoration: line-through;
+
+    background-color: rgb(172, 170, 166);
+}
+
+
+#controlPanel {
+    background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    border: 30px solid rgba(15, 82, 121, 1.0);
+    width: 640px;
+
+    /*5/30改640px*/
+
+    padding: 40px;
+    margin-top: 60px;
+    border-radius: 75px 30px  75px 30px;
+
+    position: relative;
+    /* 為了讓logo可以放進去播放器 */
+}
+
+
+    /* logo位置 */
+.corner-logo {
+    position: absolute;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10;
+
+}
+
+#controlPanel span {
+    border: 3px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 3rem;
+    box-shadow: 3px 3px 7px rgb(70, 66, 66);
+    padding: 3px;
+    font-family: webdings;
+    /* margin: 2px; */
+}
+
+    /* 隨機跟循環播放要變色 */
+.loop-btn {
+    color: black;
+    transition: color 0.2s;
+}
+.loop-btn.selected {
+    color: white;
+    background: #333;
+    border-radius: 4px;
+}
+
+
+/* 按鈕與文字不可被選取 */
+#controlPanel, #controlPanel * {
+    user-select: none;
+}
+
+
+#volumeControl>input[type="text"] {
+    width: 30px;
+    background-color: black;
+    color: rgb(0, 225, 255);
+    text-align: center;
+
+}
+
+
+#volumeControl>input[type="range"] {
+    width: 535px;
+    /* 0530width530-545-535 */
+    height:10px;
+    appearance: none;
+    /* background-color: rgba(117, 168, 153, 0.747); */
+
+    border : 1px solid rgba(36, 61, 197, 0.432)
+}
+
+#volumeControl>input[type="range"]::-webkit-slider-thumb {
+    appearance: var(--vol-thumb-appearance);
+    width: var(--vol-thumb-width);
+    height: var(--vol-thumb-height);
+    background-color: var(--vol-thumb-background-color);
+    border-radius: var(--vol-thumb-border-radius);
+    border: var(--vol-thumb-border);
+}
+
+#volumeControl>input[type="range"]::-moz-range-thumb {
+    appearance: var(--vol-thumb-appearance);
+    width: var(--vol-thumb-width);
+    height: var(--vol-thumb-height);
+    background-color: var(--vol-thumb-background-color);
+    border-radius: var(--vol-thumb-border-radius);
+    border: var(--vol-thumb-border);
+}
+
+#volumeControl>button{
+    border-radius:50% ;
+    border-width: 1px ;
+}
+
+
+
+/* #controlPanel {
+    color: rgba(200, 61, 228, 0.719);
+} */
+
+
+#information>div{
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+#progressBar {
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    /* 0530 8px */
+
+    background-color: rgb(236, 236, 234);
+    /* margin-bottom: 20px; */
+}
+
+#progressBar::-webkit-slider-thumb {
+    appearance: var(--progress-appearance);
+    background-color: var(--progress-background-color);
+    width: var(--progress-width);
+    height: var(--progress-height);
+    border: var(--progress-border)
+}
+
+#progressBar::-webkit-slider-thumb:hover {
+    width: var(--progress-hover-width);
+    height: var(--progress-hover-height);
+    border-radius: var(--progress-border-radius);
+    border: var(--progress-hover-border);
+    transition: var(--progress-transition);
+}
+
+#progressBar::-moz-range-thumb {
+    appearance: var(--progress-appearance);
+    background-color: var(--progress-background-color);
+    width: var(--progress-width);
+    height: var(--progress-height);
+    border: var(--progress-border)
+}
+
+#progressBar::-moz-range-thumb:hover {
+    width: var(--progress-hover-width);
+    height: var(--progress-hover-height);
+    border-radius: var(--progress-border-radius);
+    border: var(--progress-hover-border);
+    transition: var(--progress-transition);
+}
+
+#musicList {
+    width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+    background-color: rgb(217, 233, 228);
+    font-weight: 900;
+}
+
+

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="player_homework.css" />
+  </head>
+
+  <body>
+    <audio
+      src="music/AllLoveSongsAreYou.mp3"
+      title="No One Else-從現在起所有情歌都屬於你"
+      id="myMusic"
+      onended="musicStatus()"
+    ></audio>
+
+    <div id="controlPanel">
+      <select id="musicList" onchange="changeMusic(0)">
+        <option value="music/AllLoveSongsAreYou.mp3">No One Else-從現在起所有情歌都屬於你</option>
+        <option value="music/OneDay.mp3">黃宣-一天</option>
+        <option value="music/uncharted.mp3">Sara Bareilles-Uncharted</option>
+
+        <option value="music/WhereWindsComeFrom.mp3">金光石-Where Winds Come From</option>
+        <option value="music/thrivedeath.mp3">C Allstar-逾越生死</option>
+        <option value="music/ForLoversWhoHesitate.mp3">Jannabi-致猶豫的戀人們</option>
+        <option value="music/findloveinwronguniverse.mp3">陳健安-在錯誤的宇宙尋找愛</option>
+        <option value="music/SummerFallWinterSpring.mp3">Jannabi-夏秋冬  春</option>
+        <option value="music/SummerParadise.mp3">Simple Plan-Summer Paradise</option>
+
+
+      </select>
+      <hr />
+      <div id="functionButtons">
+        <span onclick="playMusic()">4</span>
+        <!--  <span onclick="pauseMusic()">;</span> -->
+        <span onclick="stopMusic()">&lt;</span>
+        <span onclick="changeMusic(-1)">9</span>
+        <span onclick="changeTime(-5)">7</span>
+        <span onclick="changeTime(5)">8</span>
+        <span onclick="changeMusic(1)">:</span>
+        <span onclick="setMute()">U</span>
+
+        <!-- /* 隨機跟循環播放要變色 所以先把三個按鈕放同一組*/ -->
+        <span onclick="loopOne()" class="loop-btn loop-one-btn">q</span>
+        <span onclick="setRandom()" class="loop-btn random-btn">s</span>
+        <span onclick="loopAll()" class="loop-btn loop-all-btn">`</span>
+
+        <!-- <span onclick="loopOne()">q</span>
+        <span onclick="setRandom()">s</span>
+        <span onclick="loopAll()">`</span> -->
+
+       
+        </a>
+      </div>
+      <hr />
+      <div id="volumeControl">
+        <input type="range" oninput="setVolumeByRangeBar()" value="77" />
+        <button onclick="changeVolume(-1)">-</button>
+        <button onclick="changeVolume(1)">+</button>
+        <input type="text" value="100" />
+      </div>
+      <hr />
+      <input
+        type="range"
+        id="progressBar"
+        min="0"
+        value="0"
+        oninput="setProgress()"
+      />
+      <hr />
+      <div id="information">
+        <div>00:00 / 00:00</div>
+        <div>歡迎使用我的播放器!!</div>
+        <div>正常</div>
+      </div>
+
+      <a href="https://www.wda.gov.tw/Default.aspx" target="_blank" class="corner-logo">
+      <img src="logo.png" alt="勞動部勞動力發展署" title="點我前往勞動部勞動力發展署" style="height:80px;"></a>
+
+
+    </div>
+
+
+   
+
+    <script src="player_homework.js"></script>
+
+  </body>
+</html>
