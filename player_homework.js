@@ -109,36 +109,7 @@ function loopAll() {
 
 
 
-//Teacher's code
-// function loopOne() {
-//   infoStatus.innerHTML =
-//     infoStatus.innerHTML == "單首循環" ? "正常" : "單首循環";
-// }
-// function setRandom() {
-//   infoStatus.innerHTML =
-//     infoStatus.innerHTML == "隨機播放" ? "正常" : "隨機播放";
-// }
-// function loopAll() {
-//   infoStatus.innerHTML =
-//     infoStatus.innerHTML == "全歌曲循環" ? "正常" : "全歌曲循環";
-// }
 
-
-//Teacher's code 如果播放最後一首，用隨機播放，但是無法跳回第一首
-
-// function changeMusic(n) {
-//   var i = musicList.selectedIndex; //選擇的音樂索引
-//   //console.log(i + n);
-//   myMusic.src = musicList.children[i + n].value; //更改音樂來源
-//   myMusic.title = musicList.children[i + n].innerText;
-//   musicList.children[i + n].selected = true; //選擇的音樂索引
-
-//   //console.log(btnPlay.innerText);
-
-//   if (btnPlay.innerText == ";") {
-//     myMusic.onloadeddata = playMusic; //等歌曲載入完畢後再播放音樂
-//   }
-// }
 
 // 加入如果是全歌曲循環的話，最後一首也要回到第一首
 // 如果是單首循環的話，則播放原曲  
@@ -150,30 +121,6 @@ function changeMusic(n) {
   var isLoopOne = infoStatus.innerHTML == "單首循環";
 
 
-  // var isRandom = infoStatus.innerHTML == "隨機播放";
-  // var nextIndex = i + n; //下一首音樂的索引
-
-  // // 新增：如果是隨機播放且用戶用清單選歌，跳提示
-  // if (isRandom && n === 0) {
-  //   alert("隨機播放模式下，無法直接用清單選取歌曲！");
-  //   // 恢復選取到原本正在播放的那首
-  //   musicList.selectedIndex = i;
-  //   return;
-  // }
-
-  // if (isRandom) {
-  //   // 隨機選一首（不重複目前這首）
-  //   do {
-  //     nextIndex = Math.floor(Math.random() * total);
-  //   } while (nextIndex === i && total > 1);
-  // } else if (isLoopAll) {
-  //   nextIndex = i + n;
-  //   if (nextIndex >= total) nextIndex = 0;
-  //   if (nextIndex < 0) nextIndex = total - 1;
-  // } else {
-  //   nextIndex = i + n;
-  //   if (nextIndex < 0 || nextIndex >= total) return;
-  // }
 
 
    // n=0 代表使用者直接點選清單
@@ -203,8 +150,23 @@ function changeMusic(n) {
   musicList.children[nextIndex].selected = true;
 
   if (btnPlay.innerText == ";") {
-    myMusic.onloadeddata = playMusic;
-  }
+  // 如果目前是播放狀態，切歌後自動播放
+  myMusic.onloadeddata = function() {
+    playMusic.call(btnPlay); // 保持 play/pause 圖示正確
+  };
+  } else {
+  // 如果目前是暫停狀態，切歌後維持暫停，並同步圖示
+  myMusic.onloadeddata = function() {
+  playMusic.call(btnPlay); // 自動播放並同步圖示
+  };
+    }
+
+  // if (btnPlay.innerText == ";") {
+  //   myMusic.onloadeddata = playMusic;
+  // }
+
+
+
 }
 
 
@@ -327,14 +289,11 @@ function updateInfo(txt) {
 
 //播放音樂
 function playMusic() {
-  //console.log(event.target);
   myMusic.play();
-  event.target.innerHTML = ";";
-  event.target.onclick = pauseMusic;
-
-  ProgressInitial(); //音樂開始播放時,才開始更新進度條的值
-  //playStatus.innerHTML = "目前播放" + myMusic.title + "...";
-  updateInfo("目前播放" + myMusic.title + "...");
+  btnPlay.innerHTML = ";"; // 播放鈕顯示為暫停圖示
+  btnPlay.onclick = pauseMusic; // 點擊後變成暫停
+  updateInfo("目前播放" + myMusic.title + "..."); // 狀態顯示
+  ProgressInitial();
 }
 
 //暫停音樂
