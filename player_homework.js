@@ -299,8 +299,8 @@ function playMusic() {
 //暫停音樂
 function pauseMusic() {
   myMusic.pause();
-  event.target.innerHTML = "4";
-  event.target.onclick = playMusic;
+  btnPlay.innerHTML = "4";
+  btnPlay.onclick = playMusic;
   //playStatus.innerHTML = "音樂暫停...";
   updateInfo("音樂暫停...");
 }
@@ -310,8 +310,8 @@ function stopMusic() {
   //音樂要停下來 且 時間歸零
   myMusic.pause();
   myMusic.currentTime = 0;
-  event.target.previousElementSibling.innerHTML = "4";
-  event.target.previousElementSibling.onclick = playMusic; //恢復播放音樂的功能
+  btnPlay.innerHTML = "4";
+  btnPlay.onclick = playMusic; //恢復播放音樂的功能
   //playStatus.innerHTML = "音樂停止...";
   updateInfo("音樂停止...");
 }
