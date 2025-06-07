@@ -1,7 +1,3 @@
-
-
-
-
 //使用者觸發click事件,則播放音樂
 var myMusic = document.getElementById("myMusic");
 var volumeControl = document.getElementById("volumeControl");
@@ -20,25 +16,55 @@ var btnPlay = functionButtons.children[0];
 var infoStatus = information.children[2];
 /////////////////////////////////////
 
+
+// function musicStatus() {
+//   if (infoStatus.innerText == "單首循環") {
+//     changeMusic(0);
+//   } else if (infoStatus.innerText == "隨機播放") {
+//     var n = Math.floor(Math.random() * musicList.length); //隨機在musicList中選擇一首歌
+//     changeMusic(n - musicList.selectedIndex);
+//   } else if (
+//     infoStatus.innerText == "全歌曲循環" &&
+//     musicList.length == musicList.selectedIndex + 1
+//   ) {
+//     changeMusic(0 - musicList.selectedIndex);
+//   } else if (musicList.length == musicList.selectedIndex + 1) {
+//     //是否為最後一首歌
+//     stopMusic();
+//   } else {
+//     //不是最後一首歌就播下一首歌
+//     changeMusic(1);
+//   }
+// }
+
+
+//0607edit
 function musicStatus() {
   if (infoStatus.innerText == "單首循環") {
     changeMusic(0);
   } else if (infoStatus.innerText == "隨機播放") {
-    var n = Math.floor(Math.random() * musicList.length); //隨機在musicList中選擇一首歌
-    changeMusic(n - musicList.selectedIndex);
-  } else if (
-    infoStatus.innerText == "全歌曲循環" &&
-    musicList.length == musicList.selectedIndex + 1
-  ) {
-    changeMusic(0 - musicList.selectedIndex);
-  } else if (musicList.length == musicList.selectedIndex + 1) {
-    //是否為最後一首歌
-    stopMusic();
+    var n, total = musicList.length, current = musicList.selectedIndex;
+    do {
+      n = Math.floor(Math.random() * total);
+    } while (n === current && total > 1);
+    changeMusic(n - current);
+  } else if (infoStatus.innerText == "全歌曲循環") {
+    // 如果是最後一首，跳回第一首；否則播下一首
+    if (musicList.selectedIndex === musicList.length - 1) {
+      changeMusic(0 - musicList.selectedIndex);
+    } else {
+      changeMusic(1);
+    }
   } else {
-    //不是最後一首歌就播下一首歌
-    changeMusic(1);
+    // 正常模式
+    if (musicList.selectedIndex === musicList.length - 1) {
+      stopMusic();
+    } else {
+      changeMusic(1);
+    }
   }
 }
+
 
 
 function clearLoopBtnSelected() {
@@ -98,8 +124,6 @@ function loopAll() {
 // }
 
 
-
-
 //Teacher's code 如果播放最後一首，用隨機播放，但是無法跳回第一首
 
 // function changeMusic(n) {
@@ -117,37 +141,62 @@ function loopAll() {
 // }
 
 // 加入如果是全歌曲循環的話，最後一首也要回到第一首
-// 如果是單首循環的話，則不動作  
+// 如果是單首循環的話，則播放原曲  
 // 如果是隨機播放的話，則隨機選擇一首歌 
 function changeMusic(n) {
   var i = musicList.selectedIndex; //目前選擇的音樂索引
   var total = musicList.length;
   var isLoopAll = infoStatus.innerHTML == "全歌曲循環";
-  var isRandom = infoStatus.innerHTML == "隨機播放";
-  var nextIndex;
+  var isLoopOne = infoStatus.innerHTML == "單首循環";
 
-  // 新增：如果是隨機播放且用戶用清單選歌，跳提示
-  if (isRandom && n === 0) {
-    alert("隨機播放模式下，無法直接用清單選取歌曲！");
-    // 恢復選取到原本正在播放的那首
-    musicList.selectedIndex = i;
-    return;
+
+  // var isRandom = infoStatus.innerHTML == "隨機播放";
+  // var nextIndex = i + n; //下一首音樂的索引
+
+  // // 新增：如果是隨機播放且用戶用清單選歌，跳提示
+  // if (isRandom && n === 0) {
+  //   alert("隨機播放模式下，無法直接用清單選取歌曲！");
+  //   // 恢復選取到原本正在播放的那首
+  //   musicList.selectedIndex = i;
+  //   return;
+  // }
+
+  // if (isRandom) {
+  //   // 隨機選一首（不重複目前這首）
+  //   do {
+  //     nextIndex = Math.floor(Math.random() * total);
+  //   } while (nextIndex === i && total > 1);
+  // } else if (isLoopAll) {
+  //   nextIndex = i + n;
+  //   if (nextIndex >= total) nextIndex = 0;
+  //   if (nextIndex < 0) nextIndex = total - 1;
+  // } else {
+  //   nextIndex = i + n;
+  //   if (nextIndex < 0 || nextIndex >= total) return;
+  // }
+
+
+   // n=0 代表使用者直接點選清單
+  var nextIndex = (n === 0) ? i : i + n;
+
+  if (n !== 0) {
+    // 只有自動切歌或按上下首時才考慮隨機
+    if (infoStatus.innerHTML == "隨機播放") {
+      do {
+        nextIndex = Math.floor(Math.random() * total);
+      } while (nextIndex === i && total > 1);
+    } else if (isLoopAll || isLoopOne) {
+        // 單首循環或全部循環都要首尾相接
+      if (nextIndex < 0) nextIndex = total - 1;
+      if (nextIndex >= total) nextIndex = 0;
+    } else {
+      if (nextIndex < 0) nextIndex = 0;
+      if (nextIndex >= total) nextIndex = total - 1;
+    }
+    musicList.selectedIndex = nextIndex;
   }
 
 
-  if (isRandom) {
-    // 隨機選一首（不重複目前這首）
-    do {
-      nextIndex = Math.floor(Math.random() * total);
-    } while (nextIndex === i && total > 1);
-  } else if (isLoopAll) {
-    nextIndex = i + n;
-    if (nextIndex >= total) nextIndex = 0;
-    if (nextIndex < 0) nextIndex = total - 1;
-  } else {
-    nextIndex = i + n;
-    if (nextIndex < 0 || nextIndex >= total) return;
-  }
 
   myMusic.src = musicList.children[nextIndex].value;
   myMusic.title = musicList.children[nextIndex].innerText;
@@ -190,13 +239,13 @@ function setMusicDuration() {
   progressBar.style.backgroundImage = `linear-gradient(to right, rgba(223, 201, 76, 0.77) ${w}%,rgb(236,235,234) ${w}%)`;
 
   /////////////////////////////////////////////
-  if (myMusic.currentTime == myMusic.duration) {
-    if (information.children[2].innerHTML == "單首循環") {
-      changeMusic(0);
-    } else if (musicList.length == musicList.selectedIndex + 1) {
-      stopMusic();
-    } else changeMusic(1); //自動播放下一首音樂
-  }
+  // if (myMusic.currentTime == myMusic.duration) {
+  //   if (information.children[2].innerHTML == "單首循環") {
+  //     changeMusic(0);
+  //   } else if (musicList.length == musicList.selectedIndex + 1) {
+  //     stopMusic();
+  //   } else changeMusic(1); //自動播放下一首音樂
+  // }
 }
 
 //目前歌曲的長度初始化
